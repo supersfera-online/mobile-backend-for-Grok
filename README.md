@@ -1,110 +1,47 @@
 # Grok Dynamic System Prompt Builder
 
-A clean, production-grade reference implementation for building **context-aware system prompts** in Grok.
+A clean reference implementation for building context-aware system prompts in Grok.
 
-This package allows Grok to accurately and safely answer capability questions based on the user's current interface and enabled integrations (e.g. "Can you read my X DMs?" or "Can you prepare an SMS for me?").
+This package helps Grok accurately and safely answer questions about its own capabilities based on the user's current interface and enabled integrations.
 
 ## Why This Exists
+Current LLMs often hallucinate their capabilities. This project provides a structured way to inject real session context into the system prompt.
 
-Current LLMs often hallucinate their own capabilities. This project provides a structured, policy-driven way to inject real session context (interface + integrations + permissions) into the system prompt, along with clear rules for how the model should respond.
+## Quick Start (Web Upload)
 
-It is based on the original design spec created for the Grok platform.
+1. Download or clone this folder.
+2. Go to your GitHub repository.
+3. Click **Add file** → **Upload files**.
+4. Drag the entire `grok-prompt-builder` folder (or its contents) into the upload area.
+5. Commit the changes.
 
-## Features
-
-- Typed `SessionContext` model
-- Dynamic system prompt generation with a rigorous 6-step capability policy
-- Pluggable context providers (easy to connect to real platform data)
-- Clean separation between context and prompt rendering
-- Includes the exact policy rules for honest capability disclosure
-- Ready to be integrated into Grok clients or backends
-
-## Installation
-
-```bash
-pip install -e .
-```
-
-Or for development:
-
-```bash
-pip install -e ".[dev]"
-```
-
-## Quick Start
-
-```python
-from grok_prompt_builder import get_session_context, build_system_prompt
-
-# Get context for a user (in production this comes from the platform)
-ctx = get_session_context("user_with_integrations")
-
-# Generate the dynamic system prompt block
-prompt = build_system_prompt(ctx)
-
-print(prompt)
-```
-
-Run the demo:
-
-```bash
-python -m grok_prompt_builder
-# or
-grok-prompt-builder
-```
+This structure is designed for easy drag-and-drop upload via the GitHub web interface with no hidden folders.
 
 ## Project Structure
 
 ```
-.
+grok-prompt-builder/
 ├── grok_prompt_builder/     # Main package
-│   ├── __init__.py
-│   ├── context.py           # SessionContext + get_session_context()
-│   ├── prompt.py            # build_system_prompt() + policy
-│   └── cli.py
-├── tests/                   # Test suite
-├── docs/                    # Integration guide + readiness docs
-├── .grok/skills/            # Example Grok skill
+├── docs/                    # Documentation
+├── tests/                   # Tests
+├── LICENSE
+├── NOTICE
+├── README.md
 ├── pyproject.toml
-└── verify_prompt_builder.py # Contract verification script
+└── verify_prompt_builder.py
 ```
 
-## Documentation
-
-- [Integration Guide](docs/DYNAMIC_PROMPT.md) — How clients and backend should use this
-- [Production Readiness Checklist](docs/PRODUCTION_READINESS_CHECKLIST.md)
-- [Executive Summary](docs/PRODUCTION_READINESS_EXECUTIVE_SUMMARY.md)
-
-## Running Tests
+## Running Locally
 
 ```bash
+pip install -e .
+python -m grok_prompt_builder
 pytest
-```
-
-## Verification
-
-```bash
 python verify_prompt_builder.py
 ```
 
-## Status
-
-This is a high-quality **reference implementation**.
-
-It is **not yet production-ready** for direct use inside Grok. See the [Production Readiness Checklist](docs/PRODUCTION_READINESS_CHECKLIST.md) for the full gap analysis (P0/P1/P2 items).
-
 ## License
 
-This project is licensed under the Apache License 2.0 — see the [LICENSE](LICENSE) file for details.
+Apache License 2.0 — see LICENSE and NOTICE files.
 
-Copyright holder: **Super Sfera LLC** (see [NOTICE](NOTICE) file).
-
-You must include the `NOTICE` file and retain copyright notices when redistributing or creating derivative works.
-
-## Contributing
-
-Contributions are welcome! Please open an issue first to discuss major changes.
-
----
-
-Built as part of the Grok platform design work for dynamic, honest capability disclosure.
+Copyright holder: Super Sfera LLC
